@@ -2,7 +2,9 @@
 
 Imagens Docker para o RunPod Serverless com os modelos embutidos (nada de disco de rede):
 
-- `krea2/Dockerfile`: Krea 2 Turbo, imagem. 18,6 GB de modelo.
+- `krea2/Dockerfile`: Krea 2 Turbo, imagem. 18,6 GB de modelo + a LoRA "Realistic Snapshot"
+  (CivitAI 2268008 v3084537, 229 MB) puxada de um espelho publico no HF com conferencia de sha256
+  contra o hash publicado pela CivitAI.
 - `h3/Dockerfile`: MiniMax H3, video com audio. 43 GB de modelo.
 - `qwen-edit/Dockerfile`: Qwen-Image-Edit 2511, edicao por instrucao ("mesma pessoa, troca a roupa").
   ~31 GB de modelo. Apache-2.0. Resolve o que o img2img do Krea 2 nao resolve: a imagem de referencia
