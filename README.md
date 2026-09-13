@@ -6,6 +6,10 @@ Imagens Docker para o RunPod Serverless com os modelos embutidos (nada de disco 
   (CivitAI 2268008 v3084537, 229 MB) puxada de um espelho publico no HF com conferencia de sha256
   contra o hash publicado pela CivitAI.
 - `h3/Dockerfile`: MiniMax H3, video com audio. 43 GB de modelo.
+- `ideogram4/Dockerfile`: Ideogram 4, imagem. ~32 GB de modelo (dois checkpoints: condicional +
+  unconditional, encoder Qwen3-VL 8B, VAE do Flux 2) mais o custom node RES4LYF (sampler `res_2m`) e
+  as LoRAs Realism Engine Ideogram V5 e V4. **Licenca NAO COMERCIAL** (ideogram-non-commercial-model-
+  agreement) - endpoint de teste/avaliacao, nao use a saida em anuncio ou entrega de cliente.
 - `qwen-edit/Dockerfile`: Qwen-Image-Edit 2511, edicao por instrucao ("mesma pessoa, troca a roupa").
   ~31 GB de modelo. Apache-2.0. Resolve o que o img2img do Krea 2 nao resolve: a imagem de referencia
   entra como condicionamento (`TextEncodeQwenImageEditPlus` -> `reference_latents`), entao a identidade
@@ -25,7 +29,9 @@ devolve `refresh_worker` e e descartado). Cliente, pagina e validacao: repositor
    e 80 GB, 4090 por ultimo como reserva; workers 0 a 4, idle 300 s, execution timeout 40 min. Sem volume.
 5. Endpoint de edicao: Dockerfile path `qwen-edit/Dockerfile`, GPU 48 GB (mesma familia do video),
    workers 0 a 4, idle 300 s, execution timeout 10 min. Sem volume.
-6. O RunPod constroi (limite de 30 min por build) e reconstroi a cada push na branch.
+6. Endpoint do Ideogram 4: Dockerfile path `ideogram4/Dockerfile`, GPU 48 GB, workers 0 a 2,
+   idle 300 s, execution timeout 15 min. Sem volume.
+7. O RunPod constroi (limite de 30 min por build) e reconstroi a cada push na branch.
 
 ## Lipsync
 
