@@ -5,7 +5,12 @@ Imagens Docker para o RunPod Serverless com os modelos embutidos (nada de disco 
 - `krea2/Dockerfile`: Krea 2 Turbo, imagem. 18,6 GB de modelo + a LoRA "Realistic Snapshot"
   (CivitAI 2268008 v3084537, 229 MB) puxada de um espelho publico no HF com conferencia de sha256
   contra o hash publicado pela CivitAI.
-- `h3/Dockerfile`: MiniMax H3, video com audio. 43 GB de modelo.
+- `h3/Dockerfile`: MiniMax H3 fl2va, video com audio a partir do primeiro/ultimo frame. 43 GB de modelo.
+- `h3-aio/Dockerfile`: **MiniMax H3 All-In-One (ref2va)**, o checkpoint HIBRIDO fl2va+ref2va: prompt +
+  ate 9 imagens, 3 videos e 3 audios de referencia -> video com audio, citando cada referencia no
+  proprio prompt como `<Picture i>` / `<Video k>` / `<Audio j>`. ~42,5 GB. Duas etapas (base +
+  upscale do latente). Unico custom node: `Comfyui_Minimax_h3_latent_Upscaler`. Detalhe, limites do
+  modelo e o grafo em formato de API: `h3-aio/README.md`.
 - `ideogram4/Dockerfile`: Ideogram 4, imagem. ~32 GB de modelo (dois checkpoints: condicional +
   unconditional, encoder Qwen3-VL 8B, VAE do Flux 2) mais o custom node RES4LYF (sampler `res_2m`) e
   as LoRAs Realism Engine Ideogram V5 e V4. **Licenca NAO COMERCIAL** (ideogram-non-commercial-model-
@@ -31,7 +36,10 @@ devolve `refresh_worker` e e descartado). Cliente, pagina e validacao: repositor
    workers 0 a 4, idle 300 s, execution timeout 10 min. Sem volume.
 6. Endpoint do Ideogram 4: Dockerfile path `ideogram4/Dockerfile`, GPU 48 GB, workers 0 a 2,
    idle 300 s, execution timeout 15 min. Sem volume.
-7. O RunPod constroi (limite de 30 min por build) e reconstroi a cada push na branch.
+7. Endpoint do H3 All-In-One: Dockerfile path `h3-aio/Dockerfile`, GPU **96 GB** (RTX PRO 6000, pool
+   `BLACKWELL_96` - o text encoder e NVFP4 e so Blackwell roda isso nativo), workers 0 a 2, idle 300 s,
+   execution timeout 40 min. Sem volume.
+8. O RunPod constroi (limite de 30 min por build) e reconstroi a cada push na branch.
 
 ## Lipsync
 
