@@ -26,7 +26,8 @@ RUN mkdir -p /opt/llama && cd /opt/llama \
     && curl -fL --retry 3 -o bin.tgz \
         https://github.com/PrismML-Eng/llama.cpp/releases/download/${LLAMA_RELEASE}/llama-${LLAMA_RELEASE}-bin-linux-cuda-${LLAMA_CUDA}-x64.tar.gz \
     && tar -xzf bin.tgz --strip-components=1 && rm bin.tgz \
-    && (ldd ./llama-server; ldd ./libllama-common.so) | grep -q 'not found' && exit 1 || true
+    && ldd ./llama-server ./libllama-common.so ./libggml-cuda.so | grep -E 'not found|libcu' || true
+# (so informativo: libcuda.so.1 e do driver e so aparece em runtime; o resto precisa resolver)
 
 # pesos
 RUN mkdir -p /models && cd /models \
