@@ -21,6 +21,11 @@ Imagens Docker para o RunPod Serverless com os modelos embutidos (nada de disco 
   se mantem em vez de ser reinventada. Traz as LoRAs Lightning de 4 e 8 passos (treinadas no Edit 2509,
   nao no 2511 - use como teste A/B).
 
+- `bonsai-2-27b/Dockerfile`: **Ternary-Bonsai-2-27B**, LLM de raciocinio (Qwen3.8-27B em pesos ternarios,
+  98,2% do FP16 em 7 GB, Apache-2.0). Nao e ComfyUI: `llama-server` OpenAI-compativel do **fork
+  PrismML-Eng/llama.cpp** (o llama.cpp comum e o Ollama nao rodam esse GGUF) atras de um handler fino.
+  Roda em GPU de 24 GB. Contrato da API e variaveis: `bonsai-2-27b/README.md`.
+
 Os dois usam `runpod/worker-comfyui:5.10.0-base` e o `handler.py` corrigido (worker cujo ComfyUI morreu
 devolve `refresh_worker` e e descartado). Cliente, pagina e validacao: repositorio `krea2-comfy-api`.
 
@@ -39,7 +44,9 @@ devolve `refresh_worker` e e descartado). Cliente, pagina e validacao: repositor
 7. Endpoint do H3 All-In-One: Dockerfile path `h3-aio/Dockerfile`, GPU **96 GB** (RTX PRO 6000, pool
    `BLACKWELL_96` - o text encoder e NVFP4 e so Blackwell roda isso nativo), workers 0 a 2, idle 300 s,
    execution timeout 40 min. Sem volume.
-8. O RunPod constroi (limite de 30 min por build) e reconstroi a cada push na branch.
+8. Endpoint do Bonsai 2 27B: Dockerfile path `bonsai-2-27b/Dockerfile`, GPU 24 GB (4090, L4, A5000;
+   48 GB so pra contexto de 100K+), workers 0 a 3, idle 60-300 s, FlashBoot ligado. Sem volume.
+9. O RunPod constroi (limite de 30 min por build) e reconstroi a cada push na branch.
 
 ## Lipsync
 

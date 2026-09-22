@@ -1,0 +1,7 @@
+{
+  "input": {
+    "messages": [{"role": "user", "content": "Explain quantum computing in one paragraph."}],
+    "max_tokens": 400,
+    "thinking": false
+  }
+}
