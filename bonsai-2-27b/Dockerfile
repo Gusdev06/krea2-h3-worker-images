@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates curl python3 python3-pip libgomp1 libssl3 libcurl4 \
     && rm -rf /var/lib/apt/lists/* \
-    && pip3 install --no-cache-dir runpod requests
+    && pip3 install --no-cache-dir runpod requests aiohttp
 
 # binarios do fork (llama-server + libggml-cuda etc.). Precisa de glibc >= 2.34 (22.04 tem 2.35).
 ENV LD_LIBRARY_PATH=/opt/llama:/usr/local/cuda/lib64:${LD_LIBRARY_PATH}

@@ -33,7 +33,8 @@ Variáveis de ambiente do endpoint (nenhuma exige rebuild):
 | Var | Padrão | Pra quê |
 |---|---|---|
 | `LLAMA_CTX` | `32768` | tamanho do contexto (até 262144) |
-| `LLAMA_PARALLEL` | `1` | slots simultâneos no mesmo worker; o contexto é dividido entre eles |
+| `LLAMA_PARALLEL` | `1` | slots simultâneos no mesmo worker **e** jobs que o RunPod manda ao mesmo worker (`concurrency_modifier`); o contexto é dividido entre eles — com 4, use `LLAMA_CTX=65536` (16K por slot) |
+| `LLAMA_THINKING` | `1` | `0` = modo instruct em toda chamada que não decidir via `thinking`/`chat_template_kwargs`, inclusive pela URL OpenAI. Em resposta curta corta ~20× o tempo de GPU (teste 05/10: 800 tokens e resposta vazia → 31 tokens em 0,55 s) |
 | `LLAMA_MMPROJ` | `0` | `1` carrega a torre de visão (+0,9 GB VRAM) e aceita imagem nas mensagens |
 | `LLAMA_KV4` | `0` | `1` = KV cache q4_0 (~3,5× menos memória de contexto) |
 | `LLAMA_EXTRA_ARGS` | `` | flags extras do llama-server, ex.: `--reasoning-budget 2048` |
